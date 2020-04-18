@@ -53,58 +53,37 @@
          <property name="title">
           <string>Serial Setting</string>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Serial Port</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBox_serialPortName"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Baud Rate</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="comboBox_serialPortBaudRate"/>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label">
+          <item>
+           <widget class="QPushButton" name="pushButton_connect">
             <property name="text">
-             <string>Serial Port</string>
+             <string>Connect</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_2"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Baud Rate</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="comboBox"/>
-          </item>
-          <item row="3" column="0">
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -135,7 +114,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="pushButton_startAcquisition">
                   <property name="text">
                    <string>Start</string>
                   </property>
@@ -144,7 +123,7 @@
                </layout>
               </item>
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="label_acquisitionLed">
                 <property name="text">
                  <string>LED</string>
                 </property>
@@ -167,7 +146,7 @@
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <item>
-                 <widget class="QLCDNumber" name="lcdNumber">
+                 <widget class="QLCDNumber" name="lcdNumber_acquisitionTimeLcd">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
@@ -221,7 +200,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QToolButton" name="toolButton_SaveData">
             <property name="text">
              <string>...</string>
             </property>
@@ -291,7 +270,7 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tab_rawData">
           <attribute name="title">
            <string>Raw Data</string>
           </attribute>
@@ -343,7 +322,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
-                  <widget class="QCheckBox" name="checkBox">
+                  <widget class="QCheckBox" name="checkBox_ax">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -356,7 +335,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_2">
+                  <widget class="QCheckBox" name="checkBox_ay">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -369,7 +348,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_3">
+                  <widget class="QCheckBox" name="checkBox_az">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -382,7 +361,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_4">
+                  <widget class="QCheckBox" name="checkBox_wx">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -395,7 +374,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_5">
+                  <widget class="QCheckBox" name="checkBox_wy">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -408,7 +387,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_6">
+                  <widget class="QCheckBox" name="checkBox_wz">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -474,7 +453,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_2">
+         <widget class="QWidget" name="tab_eulerAngles">
           <attribute name="title">
            <string>Euler Angles</string>
           </attribute>
@@ -526,7 +505,7 @@
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
-                  <widget class="QCheckBox" name="checkBox_7">
+                  <widget class="QCheckBox" name="checkBox_roll">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -539,7 +518,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_8">
+                  <widget class="QCheckBox" name="checkBox_pitch">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -552,7 +531,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_9">
+                  <widget class="QCheckBox" name="checkBox_yaw">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
