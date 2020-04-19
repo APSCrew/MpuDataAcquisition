@@ -5,6 +5,8 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QMessageBox>
+#include <QDebug>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,10 +25,22 @@ private slots:
 
     void on_pushButton_startAcquisition_clicked();
 
+    void on_pushButton_refresh_clicked();
+
+    void readData();
+
 private:
-    Ui::MainWindow *ui;
-    QSerialPort *serial;
-    QSerialPortInfo *serialInfo;
+    Ui::MainWindow *ui = nullptr;
+    QSerialPort *serial = nullptr;
     bool isAcquisitionStarted;
+    QLabel *serial_status_label = nullptr;
+    QLabel *acquisition_status_label = nullptr;
+    static constexpr uint8_t START_ACQUISITION = 0x01;
+    static constexpr uint8_t STOP_ACQUISITION  = 0x00;
+
+    void initializeGUI(void);
+    void sendCommand(uint8_t c);
+    void initializePlot(void);
+    void checkSerialPort(void);
 };
 #endif // MAINWINDOW_H
