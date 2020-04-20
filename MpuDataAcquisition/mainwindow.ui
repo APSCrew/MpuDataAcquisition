@@ -340,6 +340,9 @@
        </property>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="tabShape">
+          <enum>QTabWidget::Rounded</enum>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -376,7 +379,7 @@
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>84</width>
+                  <width>80</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -434,7 +437,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_wx">
+                  <widget class="QCheckBox" name="checkBox_gx">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -442,12 +445,12 @@
                     </size>
                    </property>
                    <property name="text">
-                    <string>wx</string>
+                    <string>gz</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_wy">
+                  <widget class="QCheckBox" name="checkBox_gy">
                    <property name="minimumSize">
                     <size>
                      <width>50</width>
@@ -455,12 +458,12 @@
                     </size>
                    </property>
                    <property name="text">
-                    <string>wy</string>
+                    <string>gy</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_wz">
+                  <widget class="QCheckBox" name="checkBox_gz">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -474,7 +477,46 @@
                     </size>
                    </property>
                    <property name="text">
-                    <string>wz</string>
+                    <string>gz</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_mx">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>mx</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_my">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>my</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_mz">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>mz</string>
                    </property>
                   </widget>
                  </item>
@@ -488,7 +530,7 @@
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>158</width>
+                  <width>80</width>
                   <height>20</height>
                  </size>
                 </property>

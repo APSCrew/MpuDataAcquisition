@@ -30,7 +30,22 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // inizializza qcustomplot
-//    ((QCustomPlot *)ui->tabWidget->currentWidget())
+    QList<QCustomPlot *> allPlot = ui->tabWidget->findChildren<QCustomPlot *>();
+    raw_data_plot = allPlot.at(1);
+    // create graph
+    raw_data_plot->addGraph();
+    // give the axes some labels:
+    raw_data_plot->xAxis->setLabel("time [s]");
+    raw_data_plot->yAxis->setLabel("data");
+
+    euler_data_plot = allPlot.at(0);
+    // create graph
+    euler_data_plot->addGraph();
+    // give the axes some labels:
+    euler_data_plot->xAxis->setLabel("time [s]");
+    euler_data_plot->yAxis->setLabel("data");
+
+
 
     // scrivi messaggio "non connesso" sulla toolbar
     ui->statusbar->addWidget(serial_status_label);
@@ -71,7 +86,8 @@ void MainWindow::on_pushButton_connect_clicked()
 
         }
         else{
-            QMessageBox::critical(this, tr("Error"), serial->errorString());
+            QMessageBox::critical(this, tr("Error"), "Nessun dispositivo collegato!\n"
+                                                     "Collegare un dispositivo prima di avviare la connessione seriale.");
         }
     }
     else{
@@ -142,6 +158,23 @@ void MainWindow::on_pushButton_refresh_clicked()
 void MainWindow::readData()
 {
     const QByteArray data = serial->readAll();
-    //m_console->putData(data);
 
+    // devo ricevere un array di 13 elementi
+    // 3 dell'accelerometro (ax,ay,az)
+    // 3 del giroscopio (wx,wy,wz)
+    // 3 del magnetometro (mx,my,mz)
+    // 3 per gli angoli di eulero (roll, pitch, yaw)
+    // 1 per il tempo
+
+    // a seconda di che misura voglio visualizzare
+    // prendo idati
+    // setto la legenda
+    // li plotto
+
+//    raw_data_plot->graph(0)->setData(x, y);
+//    raw_data_plot->replot();
+
+
+//    euler_data_plot->graph(0)->setData(x, y);
+//    euler_data_plot->replot();
 }

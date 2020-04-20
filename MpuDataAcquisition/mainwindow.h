@@ -35,6 +35,8 @@ private:
     bool isAcquisitionStarted;
     QLabel *serial_status_label = nullptr;
     QLabel *acquisition_status_label = nullptr;
+    QCustomPlot *raw_data_plot = nullptr;
+    QCustomPlot *euler_data_plot = nullptr;
     static constexpr uint8_t START_ACQUISITION = 0x01;
     static constexpr uint8_t STOP_ACQUISITION  = 0x00;
 
