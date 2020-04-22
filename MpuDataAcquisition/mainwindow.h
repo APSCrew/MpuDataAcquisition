@@ -40,9 +40,14 @@ private:
     static constexpr uint8_t START_ACQUISITION = 0x01;
     static constexpr uint8_t STOP_ACQUISITION  = 0x00;
 
-    void initializeGUI(void);
-    void sendCommand(uint8_t c);
-    void initializePlot(void);
-    void checkSerialPort(void);
+    // da rivedere ed implementare nella fase di refactoring..
+//    void initializeGUI(void);
+//    void sendCommand(uint8_t c);
+//    void initializePlot(void);
+//    void checkSerialPort(void);
+//    void updateRawPlot(void);
+//    void updateEulerPlot(void);
+
+    enum dataType{ ax, ay, az, gx, gy, gz, wx, wy, wz, roll, pitch, yaw, time};
 };
 #endif // MAINWINDOW_H

@@ -30,21 +30,59 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // inizializza qcustomplot
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%h:%m:%s");
+
     QList<QCustomPlot *> allPlot = ui->tabWidget->findChildren<QCustomPlot *>();
     raw_data_plot = allPlot.at(1);
     // create graph
     raw_data_plot->addGraph();
+    raw_data_plot->graph(0)->setPen(QPen(Qt::blue));       // blue line       > ax
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(1)->setPen(QPen(Qt::red));        // red line        > ay
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(2)->setPen(QPen(Qt::green));      // green line      > az
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(3)->setPen(QPen(Qt::black));      // black line      > gx
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(4)->setPen(QPen(Qt::cyan));       // cyan line       > gy
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(5)->setPen(QPen(Qt::magenta));    // magenta line    > gz
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(6)->setPen(QPen(Qt::darkCyan));   // darkCyan line   > mx
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(7)->setPen(QPen(Qt::darkRed));    // darkRed line    > my
+    raw_data_plot->addGraph();
+    raw_data_plot->graph(8)->setPen(QPen(Qt::darkYellow)); // darkYellow line > mz
+
+
+    raw_data_plot->xAxis->setTicker(timeTicker);
+    raw_data_plot->axisRect()->setupFullAxesBox();
+
     // give the axes some labels:
     raw_data_plot->xAxis->setLabel("time [s]");
     raw_data_plot->yAxis->setLabel("data");
+    // make left and bottom axes transfer their ranges to right and top axes:
+    connect(raw_data_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), raw_data_plot->xAxis2, SLOT(setRange(QCPRange)));
+    connect(raw_data_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), raw_data_plot->yAxis2, SLOT(setRange(QCPRange)));
 
     euler_data_plot = allPlot.at(0);
     // create graph
     euler_data_plot->addGraph();
+    euler_data_plot->graph(0)->setPen(QPen(Qt::blue));       // blue line  > roll
+    euler_data_plot->addGraph();
+    euler_data_plot->graph(1)->setPen(QPen(Qt::red));        // red line   > pitch
+    euler_data_plot->addGraph();
+    euler_data_plot->graph(2)->setPen(QPen(Qt::green));      // green line > yaw
+
+    euler_data_plot->xAxis->setTicker(timeTicker);
+    euler_data_plot->axisRect()->setupFullAxesBox();
     // give the axes some labels:
     euler_data_plot->xAxis->setLabel("time [s]");
     euler_data_plot->yAxis->setLabel("data");
-
+    // make left and bottom axes transfer their ranges to right and top axes:
+    connect(euler_data_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), euler_data_plot->xAxis2, SLOT(setRange(QCPRange)));
+    connect(euler_data_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), euler_data_plot->yAxis2, SLOT(setRange(QCPRange)));
 
 
     // scrivi messaggio "non connesso" sulla toolbar
@@ -157,24 +195,45 @@ void MainWindow::on_pushButton_refresh_clicked()
 
 void MainWindow::readData()
 {
-    const QByteArray data = serial->readAll();
-
-    // devo ricevere un array di 13 elementi
+    // devo ricevere un array di 13 elementi (double) -> 52 char
     // 3 dell'accelerometro (ax,ay,az)
     // 3 del giroscopio (wx,wy,wz)
     // 3 del magnetometro (mx,my,mz)
     // 3 per gli angoli di eulero (roll, pitch, yaw)
     // 1 per il tempo
+    const QByteArray data = serial->readAll();
 
-    // a seconda di che misura voglio visualizzare
-    // prendo idati
-    // setto la legenda
-    // li plotto
+    // trasformo tutti i bytes ricevuti in double
+    const auto doubleSize = 4;
+    QVector<double> receivedData;
+    for(int i=0; i<data.size(); i+=doubleSize){
+        receivedData.append( data.mid(i, doubleSize).toDouble() );
+    }
 
-//    raw_data_plot->graph(0)->setData(x, y);
-//    raw_data_plot->replot();
+    double t = data.at(time);
+    QList<QCheckBox *> allCheckBoxRawPlot = ui->tab_rawData->findChildren<QCheckBox *>();
+    QCheckBox *checkBox;
+    auto i = 0;
+    foreach(checkBox, allCheckBoxRawPlot){//per ogni elemento della lista, aggiungi i dati ricevuti
+        if( (*checkBox).isChecked() ){ // a seconda di che misura voglio visualizzare
+            raw_data_plot->graph(i)->addData(t, receivedData.at(i)); // prendo i dati
+            // setto la legenda
+            i++;
+        }
+    }
+    raw_data_plot->xAxis->setRange(t, 8, Qt::AlignRight);
+    raw_data_plot->replot(); // li plotto
 
 
-//    euler_data_plot->graph(0)->setData(x, y);
-//    euler_data_plot->replot();
+    QList<QCheckBox *> allCheckBoxEulerPlot = ui->tab_eulerAngles->findChildren<QCheckBox *>();
+    i = 0;
+    foreach(checkBox, allCheckBoxEulerPlot){//per ogni elemento della lista, aggiungi i dati ricevuti
+        if( (*checkBox).isChecked() ){ // a seconda di che misura voglio visualizzare
+            euler_data_plot->graph(i)->addData(t, receivedData.at(i)); // prendo i dati
+            // setto la legenda
+            i++;
+        }
+    }
+    euler_data_plot->xAxis->setRange(t, 8, Qt::AlignRight);
+    euler_data_plot->replot(); // li plotto
 }
